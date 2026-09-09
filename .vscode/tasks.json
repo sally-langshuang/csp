@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            // ===== C++ 编译（默认任务，Ctrl/Cmd+Shift+B）=====
+            // 外层是 macOS / Linux 的写法，windows 块整体覆盖
+            "type": "cppbuild",
+            "label": "C++: build active file",
+            "command": "/usr/bin/clang++",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-O0",
+                "-std=c++17",
+                "-Wall",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "linux": {
+                "command": "/usr/bin/g++"
+            },
+            "windows": {
+                "command": "D:/ProgramFiles/MinGW/bin/g++.exe",
+                // Windows 下产物要带 .exe，args 是整体替换，所以要写全
+                "args": [
+                    "-fdiagnostics-color=always",
+                    "-g",
+                    "-O0",
+                    "-std=c++17",
+                    "-Wall",
+                    "${file}",
+                    "-o",
+                    "${fileDirname}/${fileBasenameNoExtension}.exe"
+                ]
+            },
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "编译当前打开的 .cc/.cpp 文件（带调试信息，关优化）"
+        }
+    ]
+}

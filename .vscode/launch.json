@@ -1,0 +1,71 @@
+{
+    // 详见 https://go.microsoft.com/fwlink/?linkid=830387
+    // 外层字段是 macOS / Linux 的取值，windows / osx 块按平台覆盖
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "调试当前文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "C++: build active file",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印（STL 容器可读）",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "osx": {
+                // macOS 用 lldb：gdb 需要代码签名，且在 Apple Silicon 上不支持 arm64
+                // 不写 miDebuggerPath，交给 C/C++ 插件自己找
+                "MIMode": "lldb",
+                "setupCommands": []
+            },
+            "windows": {
+                "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "miDebuggerPath": "D:/ProgramFiles/MinGW/bin/gdb.exe",
+                // 弹独立控制台，scanf/cin 键盘输入才正常
+                "externalConsole": true
+            }
+        },
+        {
+            "name": "调试当前文件（从 in.txt 读输入）",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            // 用 shell 重定向把同目录下的 in.txt 作为标准输入
+            "args": [
+                "<",
+                "${fileDirname}/in.txt"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "C++: build active file",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印（STL 容器可读）",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "osx": {
+                "MIMode": "lldb",
+                "setupCommands": []
+            },
+            "windows": {
+                "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+                "miDebuggerPath": "D:/ProgramFiles/MinGW/bin/gdb.exe"
+            }
+        }
+    ]
+}
