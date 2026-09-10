@@ -14,7 +14,13 @@ namespace MyLib {
         void show() { cout << "Widget\n"; }
     };
 }
+
 using namespace MyLib;
+
+int main() {
+    print();
+    return 0;
+}
 
 void modify(int& x) {
     x=100;
@@ -43,7 +49,3 @@ int point() {
     return 0;
 }
 
-int main() {
-    print();
-    return 0;
-}
