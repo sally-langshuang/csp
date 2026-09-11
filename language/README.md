@@ -140,18 +140,6 @@ vector<Edge> graph[100005];   // 邻接表
 
 ---
 
-## CSP-J / CSP-S 范围对比
-
-| 阶段 | 侧重内容 |
-|---|---|
-| **CSP-J（入门级）** | `int` / `long long` / `double` / `char` / `bool` / `string` / 一维二维数组 |
-| **CSP-S（提高级）** | 在 J 组基础上，加上 STL 容器（`vector`/`queue`/`priority_queue`/`map`/`set`/`pair`）、`struct`、指针基础（链表/图论邻接表） |
-
----
-
-## 总结口诀
-
-> 整数类（`int`/`long long`，重点防溢出）→ 浮点类（`double`）→ `char`/`bool` → `string`/数组（一维二维）→ 结构体 `struct` → STL 容器（`vector`/`queue`/`priority_queue`/`map`/`set`/`pair`）
 
 # 取地址 &
 ```
@@ -182,79 +170,26 @@ int& r = a;
 r = 20;
 ```
 r是a的别名
-
-# 函数
-```
-返回类型 函数名(参数列表) {
-    // 函数体
-    return 返回值;   // 如果返回类型是 void，可以省略 return，或写 return;
-}
-```
-```
-int add(int a, int b) {
-    return a + b;
-}
-```
-```
-// 声明（只有函数签名，没有函数体，末尾加分号）
-int add(int a, int b);
-
-int main() {
-    int r = add(3, 4);   // 这里只需要"声明"就能通过编译，链接时才需要真正的定义
-    return 0;
-}
-
-// 定义（真正的实现，写在后面也行）
-int add(int a, int b) {
-    return a + b;
-}
-```
-### 参数
-```
-void byValue(int x)   { x = 100; }        // 传值：拷贝，不影响外部
-void byRef(int& x)    { x = 100; }        // 传引用：直接修改外部变量
-void byPtr(int* x)    { if (x) *x = 100; } // 传指针：通过地址修改外部变量
-```
-#### 默认参数
-默认参数必须从右往左连续设置，不能中间空一个：
-```
-void greet(std::string name, std::string greeting = "Hello") {
-    std::cout << greeting << ", " << name << "!" << std::endl;
-}
-
-greet("Alice");              // Hello, Alice!  (greeting 用默认值)
-greet("Bob", "Hi");           // Hi, Bob!       (显式传入覆盖默认值)
-```
-### 函数重载 overloading
-多个函数用同一个名字，只要参数列表（类型或个数）不同，编译器会根据调用时传入的实参自动选择匹配的版本
-```
-int add(int a, int b)       { return a + b; }
-double add(double a, double b) { return a + b; }
-int add(int a, int b, int c)   { return a + b + c; }
-
-add(1, 2);        // 调用第一个：int 版本
-add(1.5, 2.5);    // 调用第二个：double 版本
-add(1, 2, 3);     // 调用第三个：三参数版本
-```
-
-# 命名空间
-```
-namespace MyLib {
-    void print() {
-        cout << "Hello from MyLib\n";
-    }
-    int version = 1;
-
-    class Widget {
-    public:
-        void show() { cout << "Widget\n"; }
-    };
-}
-
-using namespace MyLib;
-
-int main() {
-    print();
-    return 0;
-}
-```
+- [程序结构]
+- [变量与类型](./var.md)
+- [运算符]
+- [控制流]
+- [函数]
+- [数组与字符串]
+- [指针与应用]
+- [内存管理]
+- [结构体与枚举]
+- [函数进阶]
+- [类与对象]
+- [运算符重载]
+- [继承与多态]
+- [拷贝与移动]
+- [容器]
+- [迭代器]
+- [算法]
+- [工具类]
+- [io流]
+- [模板]
+- [元编程]
+- [并发与多线程]
+- [底层与性能]

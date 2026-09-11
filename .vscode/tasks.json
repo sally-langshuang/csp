@@ -45,6 +45,42 @@
                 "isDefault": true
             },
             "detail": "编译当前打开的 .cc/.cpp 文件（带调试信息，关优化）"
+        },
+         {
+            // ===== 新增：C 编译（gcc -g -O0）=====
+            "type": "cppbuild",
+            "label": "C: build active file (gcc)",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-O0",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "windows": {
+                "command": "D:/ProgramFiles/MinGW/bin/gcc.exe",
+                "args": [
+                    "-fdiagnostics-color=always",
+                    "-g",
+                    "-O0",
+                    "${file}",
+                    "-o",
+                    "${fileDirname}/${fileBasenameNoExtension}.exe"
+                ]
+            },
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "用 gcc 编译当前打开的 .c 文件（带调试信息，关优化，对应命令：gcc -g -O0 -o demo demo.c）"
         }
     ]
 }

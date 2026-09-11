@@ -17,8 +17,19 @@ namespace MyLib {
 
 using namespace MyLib;
 
+#include <iostream>
+#include <iomanip>
+void hex() {
+    int n = 42;
+    cout << showbase << n << endl;
+    cout << showbase << dec << n << endl;
+    cout << showbase << oct << n << endl;
+    cout << hex << n << endl;
+    cout << showbase << uppercase << n << endl;
+}
+
 int main() {
-    print();
+    hex();
     return 0;
 }
 
