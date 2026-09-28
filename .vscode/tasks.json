@@ -2,11 +2,13 @@
     "version": "2.0.0",
     "tasks": [
         {
-            // ===== C++ 编译（默认任务，Ctrl/Cmd+Shift+B）=====
-            // 外层是 macOS / Linux 的写法，windows 块整体覆盖
+            // ===== C++ 编译：远程 Linux（默认任务，Ctrl/Cmd+Shift+B）=====
+            // 注意：不用 windows/linux 自动切换块——VS Code 判断平台时认的是本地客户端
+            // 系统，从 Windows 客户端连远程 Linux 时也会被判成 windows，所以固定写死
+            // 成 Linux 命令，专给"远程 Linux 主机"这个场景用
             "type": "cppbuild",
             "label": "C++: build active file",
-            "command": "/usr/bin/clang++",
+            "command": "/usr/bin/g++",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
@@ -17,23 +19,6 @@
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
-            "linux": {
-                "command": "/usr/bin/g++"
-            },
-            "windows": {
-                "command": "D:/ProgramFiles/MinGW/bin/g++.exe",
-                // Windows 下产物要带 .exe，args 是整体替换，所以要写全
-                "args": [
-                    "-fdiagnostics-color=always",
-                    "-g",
-                    "-O0",
-                    "-std=c++17",
-                    "-Wall",
-                    "${file}",
-                    "-o",
-                    "${fileDirname}/${fileBasenameNoExtension}.exe"
-                ]
-            },
             "options": {
                 "cwd": "${fileDirname}"
             },
@@ -44,10 +29,38 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "detail": "编译当前打开的 .cc/.cpp 文件（带调试信息，关优化）"
+            "detail": "【远程 Linux 用】编译当前打开的 .cc/.cpp 文件（带调试信息，关优化）"
         },
-         {
-            // ===== 新增：C 编译（gcc -g -O0）=====
+        {
+            // ===== C++ 编译：本地 Windows（MinGW）=====
+            // 只在本地原生 Windows 会话（未连接远程）里手动选用
+            "type": "cppbuild",
+            "label": "C++: build active file (本地 Windows MinGW)",
+            "command": "D:/ProgramFiles/MinGW/bin/g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-O0",
+                "-std=c++17",
+                "-Wall",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "【本地 Windows 用】用本机 MinGW 编译当前打开的 .cc/.cpp 文件"
+        },
+        {
+            // ===== 新增：C 编译（gcc -g -O0），远程 Linux =====
             "type": "cppbuild",
             "label": "C: build active file (gcc)",
             "command": "/usr/bin/gcc",
@@ -59,17 +72,6 @@
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
-            "windows": {
-                "command": "D:/ProgramFiles/MinGW/bin/gcc.exe",
-                "args": [
-                    "-fdiagnostics-color=always",
-                    "-g",
-                    "-O0",
-                    "${file}",
-                    "-o",
-                    "${fileDirname}/${fileBasenameNoExtension}.exe"
-                ]
-            },
             "options": {
                 "cwd": "${fileDirname}"
             },
@@ -80,7 +82,32 @@
                 "kind": "build",
                 "isDefault": false
             },
-            "detail": "用 gcc 编译当前打开的 .c 文件（带调试信息，关优化，对应命令：gcc -g -O0 -o demo demo.c）"
+            "detail": "【远程 Linux 用】用 gcc 编译当前打开的 .c 文件（带调试信息，关优化，对应命令：gcc -g -O0 -o demo demo.c）"
+        },
+        {
+            // ===== C 编译：本地 Windows（MinGW）=====
+            "type": "cppbuild",
+            "label": "C: build active file (本地 Windows MinGW)",
+            "command": "D:/ProgramFiles/MinGW/bin/gcc.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "-O0",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "【本地 Windows 用】用本机 MinGW gcc 编译当前打开的 .c 文件"
         }
     ]
 }

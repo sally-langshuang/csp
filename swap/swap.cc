@@ -1,5 +1,8 @@
+#include "a.h"
+#include "b.h"
 extern int buf[];
 
+// i am a shit
 void swap() 
 {
     int temp;

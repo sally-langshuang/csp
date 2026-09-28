@@ -1,6 +1,8 @@
 {
     // 详见 https://go.microsoft.com/fwlink/?linkid=830387
-    // 外层字段是 macOS / Linux 的取值，windows / osx 块按平台覆盖
+    // 不用 windows/osx 自动切换块判断"远程 Linux 还是本地 Windows"——VS Code 判断
+    // 平台用的是本地客户端系统，从 Windows 客户端连远程 Linux 时也会被判成
+    // windows，所以远程 Linux 和本地 Windows 分成两份独立命名的配置，手动选择
     "version": "0.2.0",
     "configurations": [
         {
@@ -27,12 +29,6 @@
                 // 不写 miDebuggerPath，交给 C/C++ 插件自己找
                 "MIMode": "lldb",
                 "setupCommands": []
-            },
-            "windows": {
-                "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
-                "miDebuggerPath": "D:/ProgramFiles/MinGW/bin/gdb.exe",
-                // 弹独立控制台，scanf/cin 键盘输入才正常
-                "externalConsole": true
             }
         },
         {
@@ -61,11 +57,30 @@
             "osx": {
                 "MIMode": "lldb",
                 "setupCommands": []
-            },
-            "windows": {
-                "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
-                "miDebuggerPath": "D:/ProgramFiles/MinGW/bin/gdb.exe"
             }
+        },
+        {
+            // ===== 本地 Windows（MinGW）调试 =====
+            // 只在本地原生 Windows 会话（未连接远程）里手动选用
+            "name": "调试当前文件（本地 Windows MinGW）",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "D:/ProgramFiles/MinGW/bin/gdb.exe",
+            "preLaunchTask": "C++: build active file (本地 Windows MinGW)",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印（STL 容器可读）",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
         }
     ]
 }

@@ -1,7 +1,19 @@
 	.file	"main.cc"
 	.text
-	.globl	buf
+	.globl	x
 	.data
+	.align 4
+	.type	x, @object
+	.size	x, 4
+x:
+	.long	1
+	.globl	y
+	.align 4
+	.type	y, @object
+	.size	y, 4
+y:
+	.long	2
+	.globl	buf
 	.align 8
 	.type	buf, @object
 	.size	buf, 8
