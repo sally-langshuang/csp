@@ -27,9 +27,25 @@
             "osx": {
                 // macOS 用 lldb：gdb 需要代码签名，且在 Apple Silicon 上不支持 arm64
                 // 不写 miDebuggerPath，交给 C/C++ 插件自己找
+                // 注意：lldb 下 cin 交互输入用不了（DEBUG CONSOLE 不转发给 stdin，
+                // externalConsole 弹的窗口在 mac 上也没真正接上子进程），需要交互输入
+                // 时用下面的 "调试当前文件（CodeLLDB，支持交互输入）" 配置
                 "MIMode": "lldb",
                 "setupCommands": []
             }
+        },
+        {
+            // ===== 本地 Mac，需要交互输入时用这个 =====
+            // 用 CodeLLDB 插件（vadimcn.vscode-lldb）而不是 cpptools 的 lldb，
+            // 它能把被调试进程真正接到 VS Code 集成终端上，cin 交互输入可以正常用
+            "name": "调试当前文件（CodeLLDB，支持交互输入）",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],
+            "cwd": "${fileDirname}",
+            "terminal": "integrated",
+            "preLaunchTask": "C++: build active file"
         },
         {
             "name": "调试当前文件（从 in.txt 读输入）",
